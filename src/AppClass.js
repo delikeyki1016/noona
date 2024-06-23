@@ -6,6 +6,7 @@ import ContentCutIcon from "@mui/icons-material/ContentCut";
 import PanToolIcon from "@mui/icons-material/PanTool";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 
+// 0. 가위바위보게임 클래스형으로 변환하기
 // 1. you box1, computer box1, 결과값 box1
 // 2. 가위, 바위, 보 버튼을 클릭하면 클릭한 값이 박스에 보임
 // 3. 가위, 바위, 보 버튼을 클릭하면 컴퓨터는 랜덤한 값을 뽑아와서 컴퓨터 박스에 그린다.
@@ -34,6 +35,7 @@ export default class AppClass extends Component {
             userSelect: null,
             computerSelect: null,
             result: null,
+            computerResult: null,
         };
     }
 
@@ -45,6 +47,22 @@ export default class AppClass extends Component {
             result: this.judgement(choice[yourChoice], choice[computerChoice]),
         });
     };
+
+    componentDidUpdate(prevProps, prevState) {
+        if (
+            prevState.result !== this.state.result &&
+            this.state.result !== null
+        ) {
+            this.setState({
+                computerResult:
+                    this.state.result === "win"
+                        ? "lose"
+                        : this.state.result === "lose"
+                        ? "win"
+                        : "tie",
+            });
+        }
+    }
 
     random = () => {
         let randomArray = Object.keys(choice);
@@ -68,16 +86,17 @@ export default class AppClass extends Component {
         return (
             <>
                 <div className="wrap">
-                    <BoxClass title="You" item={this.state.userSelect} />
+                    <BoxClass
+                        title="You"
+                        item={this.state.userSelect}
+                        result={this.state.result}
+                    />
                     <BoxClass
                         title="Computer"
                         item={this.state.computerSelect}
+                        result={this.state.computerResult}
                     />
                 </div>
-                {/* <div className="wrap">
-                    state: {this.state.counter}
-                    <button onClick={() => this.increase()}>ADD</button>
-                </div> */}
                 <div className="wrap">
                     <button onClick={() => this.play("scissor")}>
                         <ContentCutIcon />
@@ -91,7 +110,7 @@ export default class AppClass extends Component {
                         <PanToolIcon />보
                     </button>
                 </div>
-                <div className="wrap">{this.state.result}</div>
+                <div className="wrap">결과: {this.state.result}</div>
             </>
         );
     }

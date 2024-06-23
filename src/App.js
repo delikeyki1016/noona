@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 // 4. 2,3번을 비교한다.
 // 5. 결과 박스에 결과를 표기한다.
 // 6. 이기면 테두리가 초록색, 지면 테두리가 빨강, 비기면 검정색
+
+// 가위바위보 정보 객체
 const choice = {
     scissor: {
         name: "scissor",
@@ -30,8 +32,9 @@ function App() {
     const [computerSelect, setComputerSelect] = useState(null);
     const [result, setResult] = useState(null);
     const [computerResult, setComputerResult] = useState(null);
+
     const play = (userChoice) => {
-        console.log("user choice:", userChoice);
+        // console.log("user choice:", userChoice);
         setUserSelect(choice[userChoice]);
         let computerChoice = randomChoice();
         // console.log("computer choice", computerChoice);
