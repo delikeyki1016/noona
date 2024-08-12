@@ -4,7 +4,7 @@ const Box = (props) => {
     props.result === "Win"
         ? (resultClass = "win")
         : props.result === "Loose"
-        ? (resultClass = "loose")
+        ? (resultClass = "lose")
         : (resultClass = "tie");
 
     return (
